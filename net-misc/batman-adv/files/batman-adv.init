@@ -1,0 +1,52 @@
+#!/sbin/runscript
+# Copyright 1999-2011 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+depend()
+{
+	for iface in "$MESH_INTERFACES"
+	do
+		[ -e /etc/init.d/net.$iface ] && need net."$iface"
+	done
+}
+
+start()
+{
+	ebegin "Starting BATMAN-ADV"
+
+	insmod $BATMAN_MODULE_PATH
+	sleep 1s
+	batctl interface add $MESH_INTERFACES
+
+	echo "$CUSTOM_START_COMMANDS" | while read line
+	do
+		[ "void$line" == "void" ] || batctl $line
+	done
+	
+	eend $?
+}
+
+stop()
+{
+        ebegin "Stopping BATMAN-ADV"
+
+	echo $CUSTOM_STOP_COMMANDS | while read line
+	do
+		[ "void$line" == "void" ] || batctl $line
+	done
+
+	batctl interface del $MESH_INTERFACES
+	sleep 1s
+	rmmod batman-adv
+
+	eend $?
+}
+
+restart()
+{
+	svc_stop
+        sleep 3
+	svc_start
+}
+
