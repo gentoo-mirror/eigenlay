@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-<maintainer>
-<email></email>gmazzurco89@gmail.com
-<name>Gioacchino Mazzurco</name>
-</maintainer>
+	<maintainer>
+		<email>gmazzurco89@gmail.com</email>
+		<name>Gioacchino Mazzurco</name>
+	</maintainer>
 </pkgmetadata>
 
