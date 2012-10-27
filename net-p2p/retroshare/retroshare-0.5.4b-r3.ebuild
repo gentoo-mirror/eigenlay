@@ -36,8 +36,7 @@ RDEPEND="
 	)"
 DEPEND="${RDEPEND}"
 
-#TODO add the voip X requirement
-REQUIRED_USE="|| ( cli X ) links-cloud? ( X ) voip? ( X )"
+REQUIRED_USE="links-cloud? ( X ) voip? ( X )"
 
 S="${WORKDIR}/trunk"
 
