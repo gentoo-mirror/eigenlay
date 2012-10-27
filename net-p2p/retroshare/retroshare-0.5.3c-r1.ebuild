@@ -37,7 +37,8 @@ DEPEND="${RDEPEND}
 
 REQUIRED_USE="|| ( cli qt4 )"
 
-src_prepare() {
+src_prepare()
+{
 	epatch "${FILESDIR}/${P}.patch"
 	sed -i -e \
 		"s|/usr/lib/retroshare/extensions/|/usr/$(get_libdir)/${PN}/extensions/|" \
@@ -45,7 +46,8 @@ src_prepare() {
 		|| die "sed failed"
 }
 
-src_compile() {
+src_compile()
+{
 	cd "${WORKDIR}/trunk/libbitdht/src"
 	qmake -makefile libbitdht.pro || die
 	emake
@@ -67,7 +69,8 @@ src_compile() {
 	fi
 }
 
-src_install() {
+src_install()
+{
 	if use qt4; then
 		cd "${WORKDIR}/trunk/retroshare-gui/src"
 		emake INSTALL_ROOT="${D}" install
@@ -82,7 +85,8 @@ src_install() {
 	doins "${WORKDIR}/trunk/libbitdht/src/bitdht/bdboot.txt"
 }
 
-pkg_postinst() {
+pkg_postinst()
+{
 	use qt4 && einfo "The GUI executable name is: RetroShare"
 	use cli && einfo "The console executable name is: retroshare-cli"
 }

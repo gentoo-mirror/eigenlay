@@ -7,17 +7,12 @@ EAPI="4"
 inherit eutils multilib qt4-r2 versionator
 
 MY_PN="RetroShare"
-MY_PV="v$(get_version_component_range 1-3)"
-if [[ "$(get_version_component_range 4)" == "alpha" ]] ; then
-	MY_PV="${MY_PV}a"
-elif [[ "$(get_version_component_range 4)" == "beta" ]] ; then
-	MY_PV="${MY_PV}b"
-fi
-MY_P="${MY_PN}-${MY_PV}"
+MY_P="${MY_PN}-v${PV}"
 
 DESCRIPTION="P2P private sharing application"
 HOMEPAGE="http://retroshare.sourceforge.net"
 SRC_URI="mirror://sourceforge/retroshare/${MY_P}.tar.gz"
+RESTRICT="mirror"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -46,31 +41,38 @@ REQUIRED_USE="|| ( cli X ) links-cloud? ( X ) voip? ( X )"
 
 S="${WORKDIR}/trunk"
 
-src_prepare() {
+src_prepare()
+{
 	rs_src_dirs="libbitdht/src openpgpsdk/src libretroshare/src"
 	use cli && rs_src_dirs="${rs_src_dirs} retroshare-nogui/src"
 	use X && rs_src_dirs="${rs_src_dirs} retroshare-gui/src"
 	use links-cloud && rs_src_dirs="${rs_src_dirs} plugins/LinksCloud"
-	if use voip ; then
+
+	if use voip
+	then
 		rs_src_dirs="${rs_src_dirs} plugins/VOIP"
 		echo "QT += multimedia mobility" >> "plugins/VOIP/VOIP.pro"
 	fi
 
-	for dir in ${rs_src_dirs} ; do
+	for dir in ${rs_src_dirs}
+	do
 		cd "${S}/${dir}"
 		eqmake4
 	done
 }
 
-src_compile() {
-	for dir in ${rs_src_dirs} ; do
+src_compile()
+{
+	for dir in ${rs_src_dirs}
+	do
 		einfo "entering ${dir} ..."
 		cd "${S}/${dir}"
 		emake
 	done
 }
 
-src_install() {
+src_install()
+{
 	use cli && dobin retroshare-nogui/src/retroshare-nogui
 	use X && dobin retroshare-gui/src/RetroShare
 
@@ -89,7 +91,8 @@ src_install() {
 	doins "${S}/libbitdht/src/bitdht/bdboot.txt"
 }
 
-pkg_postinst() {
+pkg_postinst()
+{
 	use X && einfo "The GUI executable name is: RetroShare"
 	use cli && einfo "The console executable name is: retroshare-cli"
 	elog "$(shasum ${extension_dir}/*.so)"
