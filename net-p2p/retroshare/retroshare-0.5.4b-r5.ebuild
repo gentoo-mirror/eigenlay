@@ -36,7 +36,7 @@ RDEPEND="
 	)"
 DEPEND="${RDEPEND}"
 
-REQUIRED_USE="links-cloud? ( X ) voip? ( X )"
+REQUIRED_USE="|| ( cli X ) links-cloud? ( X ) voip? ( X )"
 
 S="${WORKDIR}/trunk"
 
@@ -78,11 +78,11 @@ src_install()
 	extension_dir="/usr/$(get_libdir)/retroshare/extensions/"
 	if use links-cloud ; then
 		insinto ${extension_dir}
-		doins ${S}/plugins/LinksCloud/*.so*
+		doins ${S}/plugins/LinksCloud/*.so*        # Ignore repoman complaining about unquoted var, this must be unquoted for * expancion
 	fi
 	if use voip ; then
 		insinto ${extension_dir}
-		doins ${S}/plugins/VOIP/*.so*
+		doins ${S}/plugins/VOIP/*.so*              # Ignore repoman complaining about unquoted var, this must be unquoted for * expancion
 	fi
 
 	dodir /usr/share/${PN}
