@@ -78,11 +78,11 @@ src_install()
 	extension_dir="/usr/$(get_libdir)/retroshare/extensions/"
 	if use links-cloud ; then
 		insinto ${extension_dir}
-		doins "${S}/plugins/LinksCloud/*.so*"
+		doins ${S}/plugins/LinksCloud/*.so*
 	fi
 	if use voip ; then
 		insinto ${extension_dir}
-		doins "${S}/plugins/VOIP/*.so*"
+		doins ${S}/plugins/VOIP/*.so*
 	fi
 
 	dodir /usr/share/${PN}
