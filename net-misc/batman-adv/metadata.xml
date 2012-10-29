@@ -2,8 +2,11 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer>
-		<email>gmazzurco89@gmail.com</email>
+		<email>gio@eigenlab.org</email>
 		<name>Gioacchino Mazzurco</name>
 	</maintainer>
+	<use>
+		<flag name="bla">B.A.T.M.A.N. bridge loop avoidance</flag>
+	</use>
 </pkgmetadata>
 
