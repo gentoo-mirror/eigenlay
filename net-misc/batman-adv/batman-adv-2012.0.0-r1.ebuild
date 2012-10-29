@@ -2,8 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
-
 CONFIG_CHECK="~!CONFIG_BATMAN_ADV"
 MODULE_NAMES="${PN}(net:${S}:${S})"
 BUILD_TARGETS="all"
@@ -17,15 +15,12 @@ SRC_URI="http://downloads.open-mesh.org/batman/stable/sources/${PN}/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug bla"
+IUSE=""
 
 DEPEND=""
 RDEPEND="net-misc/batctl"
 
 src_compile() {
-	BUILD_PARAMS="CONFIG_BATMAN_ADV_DEBUG=$(use debug && echo y || echo n)"
-	BUILD_PARAMS+=" CONFIG_BATMAN_ADV_BLA=$(use bla && echo y || echo n)"
-	export BUILD_PARAMS
 	export KERNELPATH="${KERNEL_DIR}"
 	linux-mod_src_compile
 }
@@ -33,6 +28,6 @@ src_compile() {
 src_install() {
 	linux-mod_src_install
 	dodoc README CHANGELOG
-	doconfd "${FILESDIR}"/batman-adv.example
+	doconfd "${FILESDIR}"/batman-adv.conf
 	newinitd "${FILESDIR}"/batman-adv.init batman-adv
 }
