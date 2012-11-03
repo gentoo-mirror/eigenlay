@@ -47,11 +47,11 @@ src_prepare()
 	use X && rs_src_dirs="${rs_src_dirs} retroshare-gui/src"
 	use links-cloud && rs_src_dirs="${rs_src_dirs} plugins/LinksCloud"
 
-	if use voip
-	then
+	use voip &&
+	{
 		rs_src_dirs="${rs_src_dirs} plugins/VOIP"
 		echo "QT += multimedia mobility" >> "plugins/VOIP/VOIP.pro"
-	fi
+	}
 
 	for dir in ${rs_src_dirs}
 	do
@@ -74,7 +74,8 @@ src_install()
 {
 	use cli && dobin retroshare-nogui/src/retroshare-nogui
 
-	if use X ; then
+	use X &&
+	{
 		dobin retroshare-gui/src/RetroShare
 		newicon -s 32 retroshare-gui/src/gui/images/retrosharelogo32.png \
 			${PN}.png
@@ -83,15 +84,17 @@ src_install()
 		make_desktop_entry RetroShare RetroShare ${PN}
 
 		extension_dir="/usr/$(get_libdir)/retroshare/extensions/"
-		if use links-cloud ; then
+		use links-cloud &&
+		{
 			insinto ${extension_dir}
 			doins ${S}/plugins/LinksCloud/*.so*        # Ignore repoman complaining about unquoted var, this must be unquoted for * expancion
-		fi
-		if use voip ; then
+		}
+		use voip &&
+		{
 			insinto ${extension_dir}
 			doins ${S}/plugins/VOIP/*.so*              # Ignore repoman complaining about unquoted var, this must be unquoted for * expancion
-		fi
-	fi
+		}
+	}
 
 	dodir /usr/share/${PN}
 	insinto /usr/share/${PN}
@@ -102,8 +105,9 @@ pkg_postinst()
 {
 	use X && einfo "The GUI executable name is: RetroShare"
 	use cli && einfo "The console executable name is: retroshare-cli"
-	if use links-cloud || use voip ; then
+	use links-cloud || use voip &&
+	{
 		elog "Plugin hashes:"
 		elog "$(shasum ${extension_dir}/*.so)"
-	fi
+	}
 }
