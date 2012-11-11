@@ -11,7 +11,7 @@ HOMEPAGE="http://www.pps.jussieu.fr/~jch/software/babel/"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 if [[ ${PV} == "9999" ]]
@@ -34,7 +34,7 @@ src_install()
 
 	newinitd "${FILESDIR}/babeld.init" babeld
 
-	doconfd "${FILESDIR}/babeld.confd"
+	newconfd "${FILESDIR}/babeld.confd" babeld
 
 	dodoc CHANGES README || die "dodoc failed"
 	mv ${PN}.man ${PN}.8
