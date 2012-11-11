@@ -70,7 +70,7 @@ stop()
 
 		echo ${shared_routes} | while read line
 		do
-			echo ${line} | grep -q , || && continue
+			echo ${line} | grep -q , || continue
 
 			destination="$(echo ${line} | awk -F, '{print $1}')"
 			routeOptions="$(echo ${line} | awk -F, '{print $2}')"
