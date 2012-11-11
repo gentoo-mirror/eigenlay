@@ -1,6 +1,4 @@
 
-BABELD_CONF_FILE="/etc/babeld/babeld.conf"
-
 BABELD_PID_FILE="/var/run/babeld.pid"
 
-BABELD_EXTRA_OPTS=""
+BABELD_EXTRA_OPTS="-c /etc/babeld/babeld.conf"
