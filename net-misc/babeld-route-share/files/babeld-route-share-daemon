@@ -66,6 +66,8 @@ stop()
 
 		kill ${pid}
 
+		rm ${pidFile}
+
 		echo ${shared_routes} | while read line
 		do
 			[ "void$line" == "void" ] && continue
@@ -88,5 +90,8 @@ stop()
 	return 1
 }
 
-[ "${1}" = "start" ] && start
-[ "${1}" = "stop"  ] && stop
+[ "${1}" = "start" ] && start && exit 0
+[ "${1}" = "stop"  ] && stop  && exit 0
+
+exit 1
+
