@@ -12,15 +12,15 @@ start()
 		do
 			echo ${shared_routes} | while read line
 			do
-				[ "void$line" == "void" ] && continue
+				echo ${line} | grep -q , || continue
 
 				tryCount=0
 				failCount=0
 
-				destination="$(echo ${line} | awk -F, {$1})"
-				routeOptions="$(echo ${line} | awk -F, {$2})"
-				checkHosts="$(echo ${line} | awk -F, {$3})"
-				strictCheck=$(echo ${line} | awk -F, {$4})
+				destination="$(echo ${line}  | awk -F, '{print $1}')"
+				routeOptions="$(echo ${line} | awk -F, '{print $2}')"
+				checkHosts="$(echo ${line}   | awk -F, '{print $3}')"
+				strictCheck=$(echo ${line}   | awk -F, '{print $4}')
 
 				ipv6=""
 				echo ${checkHosts} | grep -q : && ipv6="6" 
@@ -33,14 +33,14 @@ start()
 					ip route del ${host} ${routeOptions} || true
 				done
 
-				[ ${strictCheck} -eq 1 ] && [ $failCount -gt 0  ] &&
+				[ ${strictCheck} -eq 1 ] && [ ${failCount} -gt 0  ] &&
 				{
 					# echo "ip route del ${route}"
 					ip route del ${destination} ${routeOptions} && killall --signal SIGUSR2 babeld || true
 					continue
 				}
 
-				[ $failCount -ge $tryCount ] &&
+				[ ${failCount} -ge ${tryCount} ] &&
 				{
 					#echo "ip route del ${route}"
 					ip route del ${destination} ${routeOptions} && killall --signal SIGUSR2 babeld || true
@@ -70,11 +70,11 @@ stop()
 
 		echo ${shared_routes} | while read line
 		do
-			[ "void$line" == "void" ] && continue
+			echo ${line} | grep -q , || && continue
 
-			destination="$(echo ${line} | awk -F, {$1})"
-			routeOptions="$(echo ${line} | awk -F, {$2})"
-			checkHosts="$(echo ${line} | awk -F, {$3})" 
+			destination="$(echo ${line} | awk -F, '{print $1}')"
+			routeOptions="$(echo ${line} | awk -F, '{print $2}')"
+			checkHosts="$(echo ${line} | awk -F, '{print $3}')" 
 
 			for host in ${checkHosts}
 			do
