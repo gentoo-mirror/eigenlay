@@ -31,11 +31,15 @@ src_install()
 {
 	exeinto /usr/sbin
 	doexe babeld || die "install failed"
+
+	newinitd "${FILESDIR}/babeld.init" babeld
+
+	doconfd "${FILESDIR}/babeld.confd"
+
 	dodoc CHANGES README || die "dodoc failed"
 	mv ${PN}.man ${PN}.8
 	doman ${PN}.8 || die "doman failed"
 
-	# Empty dir
 	dodir /etc/babeld
 	keepdir /etc/babeld
 	insinto /etc/babeld ; doins "${FILESDIR}/${PN}.conf"

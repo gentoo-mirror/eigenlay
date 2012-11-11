@@ -1,0 +1,92 @@
+#!/bin/sh
+
+pidFile="/var/run/babeld-route-share-daemon.pid"
+
+. /etc/babeld/babeld-route-share-daemon.conf
+
+start()
+{
+	[ -f ${pidFile} ] && pid=$(cat ${pidFile}) && ps ${pid} | grep -q ${0} ||
+	{
+		while sleep $check_interval
+		do
+			echo ${shared_routes} | while read line
+			do
+				[ "void$line" == "void" ] && continue
+
+				tryCount=0
+				failCount=0
+
+				destination="$(echo ${line} | awk -F, {$1})"
+				routeOptions="$(echo ${line} | awk -F, {$2})"
+				checkHosts="$(echo ${line} | awk -F, {$3})"
+				strictCheck=$(echo ${line} | awk -F, {$4})
+
+				ipv6=""
+				echo ${checkHosts} | grep -q : && ipv6="6" 
+
+				for host in ${checkHosts}
+				do
+					ip route add ${host} ${routeOptions} || true  
+					ping${ipv6} -c 5 -q $host || failCount=$((failCount+1))
+					tryCount=$((tryCount+1))
+					ip route del ${host} ${routeOptions} || true
+				done
+
+				[ ${strictCheck} -eq 1 ] && [ $failCount -gt 0  ] &&
+				{
+					# echo "ip route del ${route}"
+					ip route del ${destination} ${routeOptions} && killall --signal SIGUSR2 babeld || true
+					continue
+				}
+
+				[ $failCount -ge $tryCount ] &&
+				{
+					#echo "ip route del ${route}"
+					ip route del ${destination} ${routeOptions} && killall --signal SIGUSR2 babeld || true
+					continue
+				}
+
+				#echo  "ip route add ${route}"
+				ip route add ${destination} ${routeOptions} && killall --signal SIGUSR2 babeld || true
+			done &> /dev/null
+		done &
+		echo $! > ${pidFile}
+
+		return 0
+	}
+
+	return 1
+}
+
+stop()
+{
+	[ -f ${pidFile} ] && pid=$(cat ${pidFile}) && $(ps ${pid} | grep -q ${0}) &&
+	{
+
+		kill ${pid}
+
+		echo ${shared_routes} | while read line
+		do
+			[ "void$line" == "void" ] && continue
+
+			destination="$(echo ${line} | awk -F, {$1})"
+			routeOptions="$(echo ${line} | awk -F, {$2})"
+			checkHosts="$(echo ${line} | awk -F, {$3})" 
+
+			for host in ${checkHosts}
+			do
+				ip route del ${host} ${routeOptions} || true  
+			done
+
+			ip route del ${destination} ${routeOptions} || true
+		done
+
+		return 0
+	}
+
+	return 1
+}
+
+[ "${1}" = "start" ] && start
+[ "${1}" = "stop"  ] && stop
