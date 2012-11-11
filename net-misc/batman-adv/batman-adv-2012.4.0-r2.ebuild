@@ -33,6 +33,6 @@ src_compile() {
 src_install() {
 	linux-mod_src_install
 	dodoc README CHANGELOG
-	doconfd "${FILESDIR}/batman-adv.conf"
+	newconfd "${FILESDIR}/batman-adv.conf" batman-adv
 	newinitd "${FILESDIR}/batman-adv.init" batman-adv
 }
