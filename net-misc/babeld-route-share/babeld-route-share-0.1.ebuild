@@ -23,10 +23,10 @@ RDEPEND="
 
 src_install()
 {
-	newinitd "${FILESDIR}"/${PN}-daemon.init ${PN}
+	newinitd "${FILESDIR}/${PN}-daemon.init" ${PN}
 
 	exeinto /usr/sbin
-	doexe ${FILESDIR}/${PN}-daemon || die "install failed"
+	doexe "${FILESDIR}/${PN}-daemon" || die "install failed"
 
 	dodir /etc/babeld
 	keepdir /etc/babeld
