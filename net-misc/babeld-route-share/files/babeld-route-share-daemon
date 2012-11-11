@@ -66,6 +66,8 @@ stop()
 
 		kill ${pid}
 
+		sleep 3s
+
 		rm ${pidFile}
 
 		echo ${shared_routes} | while read line
