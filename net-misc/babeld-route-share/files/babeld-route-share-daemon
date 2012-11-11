@@ -82,7 +82,7 @@ stop()
 			done
 
 			ip route del ${destination} ${routeOptions} || true
-		done
+		done &> /dev/null
 
 		return 0
 	}
