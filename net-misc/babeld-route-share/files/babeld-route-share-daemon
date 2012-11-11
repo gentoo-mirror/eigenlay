@@ -27,10 +27,10 @@ start()
 
 				for host in ${checkHosts}
 				do
-					ip route add ${host} ${routeOptions} || true  
+					ip route add ${host}/32 ${routeOptions} || true  
 					ping${ipv6} -c 5 -q $host || failCount=$((failCount+1))
 					tryCount=$((tryCount+1))
-					ip route del ${host} ${routeOptions} || true
+					ip route del ${host}/32 ${routeOptions} || true
 				done
 
 				[ ${strictCheck} -eq 1 ] && [ ${failCount} -gt 0  ] &&
@@ -78,7 +78,7 @@ stop()
 
 			for host in ${checkHosts}
 			do
-				ip route del ${host} ${routeOptions} || true  
+				ip route del ${host}/32 ${routeOptions} || true  
 			done
 
 			ip route del ${destination} ${routeOptions} || true
