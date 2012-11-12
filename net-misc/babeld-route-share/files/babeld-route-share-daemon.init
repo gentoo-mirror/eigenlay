@@ -19,7 +19,7 @@ start()
 
 stop()
 {
-	ebegin "Starting Babeld Safe Route Sharing daemon"
+	ebegin "Stopping Babeld Safe Route Sharing daemon"
 
 	/usr/sbin/babeld-route-share-daemon stop
 
