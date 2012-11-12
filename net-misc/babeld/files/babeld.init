@@ -12,7 +12,7 @@ start()
 {
 	ebegin "Starting babeld"
 
-	/usr/sbin/babeld -I ${BABELD_PID_FILE} ${BABELD_EXTRA_OPTS}
+	/usr/sbin/babeld -D -I ${BABELD_PID_FILE} ${BABELD_EXTRA_OPTS}
 
 	eend $?
 }
