@@ -19,7 +19,7 @@ start()
 
 stop()
 {
-	ebegin "Starting babeld"
+	ebegin "Stopping babeld"
 
 	[ -f ${BABELD_PID_FILE} ] && pid=$(cat ${BABELD_PID_FILE}) && ps ${pid} | grep -q babeld && kill ${pid} && sleep 2 && rm -f ${BABELD_PID_FILE}
 
