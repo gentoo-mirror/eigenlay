@@ -30,7 +30,7 @@ pkg_setup()
 {
 	ebegin "Creating named group and user"
 	enewgroup monkeysphere
-	enewuser monkeysphere -1 -1 /var/lib/monkeysphere monkeysphere
+	enewuser monkeysphere -1 /bin/sh /var/lib/monkeysphere monkeysphere
 	eend ${?}
 }
 
