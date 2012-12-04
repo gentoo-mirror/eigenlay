@@ -31,8 +31,8 @@ pkg_setup()
 	ebegin "Creating named group and user"
 	enewgroup monkeysphere
 	enewuser monkeysphere -1 /bin/sh /var/lib/monkeysphere monkeysphere
-	fowners root:root /var/lib/monkeysphere
-	fperms 751 /var/lib/monkeysphere
+	chown root:root /var/lib/monkeysphere
+	chmod 751 /var/lib/monkeysphere
 	eend ${?}
 }
 
