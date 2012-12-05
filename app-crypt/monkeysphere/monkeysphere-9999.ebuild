@@ -10,7 +10,7 @@ HOMEPAGE="http://web.monkeysphere.info/"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS=""
 IUSE=""
 
 if [[ ${PV} == "9999" ]]
