@@ -13,7 +13,7 @@ start()
 
 	ebegin "Starting Serra Auto Login Daemon"
 
-	/usr/bin/serralogin-daemon &> /dev/null &
+	/usr/sbin/serralogin-daemon &> /dev/null &
 
 	eend $?
 
