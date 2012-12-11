@@ -7,7 +7,7 @@ depend()
 {
 	for iface in "$MESH_INTERFACES"
 	do
-		[ "${RC_SYS} = "lxc" ] || [ -e /etc/init.d/net.$iface ] && need net."$iface"
+		[ "${RC_SYS}" = "lxc" ] || [ -e /etc/init.d/net.$iface ] && need net."$iface"
 	done
 }
 
