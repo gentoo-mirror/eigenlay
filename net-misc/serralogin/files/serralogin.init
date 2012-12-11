@@ -3,11 +3,6 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-depend()
-{
-	[ -e /etc/init.d/net.$SERRA_INTERFACE ] && need net.$SERRA_INTERFACE || need net
-}
-
 start()
 {
 
