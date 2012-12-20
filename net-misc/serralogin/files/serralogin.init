@@ -3,12 +3,15 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+serraloginDaemonPid="/var/run/serralogin.init.pid"
+
 start()
 {
 
 	ebegin "Starting Serra Auto Login Daemon"
 
 	/usr/sbin/serralogin-daemon &> /dev/null &
+	echo $! > ${serraloginDaemonPid} 
 
 	eend $?
 
@@ -19,7 +22,7 @@ stop()
 
 	ebegin "Stopping Serra Auto Login Daemon"
 
-	killall serralogin-daemon
+	[ -f ${serraloginDaemonPid} ] && pid=$(cat ${serraloginDaemonPid}) && ps ${pid} | grep -q serralogin-daemon && kill ${pid} && sleep 2 && rm -f ${serraloginDaemonPid}
 
 	eend $?
 
