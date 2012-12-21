@@ -7,7 +7,7 @@ start()
 {
 	ebegin "Starting babeld"
 
-	/usr/sbin/babeld -D -I ${BABELD_PID_FILE} ${BABELD_EXTRA_OPTS}
+	/usr/sbin/babeld -D -I "${BABELD_PID_FILE}" ${BABELD_EXTRA_OPTS}
 
 	eend $?
 }
@@ -16,7 +16,7 @@ stop()
 {
 	ebegin "Stopping babeld"
 
-	[ -f ${BABELD_PID_FILE} ] && pid=$(cat ${BABELD_PID_FILE}) && ps ${pid} | grep -q babeld && kill ${pid} && sleep 2 && rm -f ${BABELD_PID_FILE}
+	[ -f "${BABELD_PID_FILE}" ] && pid=$(cat "${BABELD_PID_FILE}") && ps ${pid} | grep -q babeld && kill ${pid} && sleep 2 && rm -f "${BABELD_PID_FILE}"
 
 	eend $?
 }
