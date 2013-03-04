@@ -1,4 +1,4 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -23,16 +23,16 @@ RDEPEND="
 	dev-libs/libgpg-error
 	gnome-base/libgnome-keyring
 	net-libs/libupnp
-	x11-libs/qt-core:4
+	dev-qt/qtcore:4
 	X? (
 		x11-libs/libXScrnSaver
-		x11-libs/qt-gui:4
-		x11-libs/qt-opengl:4
+		dev-qt/qtgui:4
+		dev-qt/qtopengl:4
 	)
 	voip? (
 		   media-libs/speex
-		   x11-libs/qt-mobility[multimedia]
-		   x11-libs/qt-multimedia
+		   dev-qt/qt-mobility[multimedia]
+		   dev-qt/qtmultimedia
 	)"
 DEPEND="${RDEPEND}"
 
@@ -86,13 +86,13 @@ src_install()
 		extension_dir="/usr/$(get_libdir)/retroshare/extensions/"
 		use links-cloud &&
 		{
-			insinto ${extension_dir}
-			doins ${S}/plugins/LinksCloud/*.so*        # Ignore repoman complaining about unquoted var, this must be unquoted for * expancion
+			insinto "${extension_dir}"
+			doins "${S}"/plugins/LinksCloud/*.so*        # Ignore repoman complaining about unquoted var, this must be unquoted for * expancion
 		}
 		use voip &&
 		{
-			insinto ${extension_dir}
-			doins ${S}/plugins/VOIP/*.so*              # Ignore repoman complaining about unquoted var, this must be unquoted for * expancion
+			insinto "${extension_dir}"
+			doins "${S}"/plugins/VOIP/*.so*              # Ignore repoman complaining about unquoted var, this must be unquoted for * expancion
 		}
 	}
 
@@ -110,4 +110,7 @@ pkg_postinst()
 		elog "Plugin hashes:"
 		elog "$(shasum ${extension_dir}/*.so)"
 	}
+
+	elog "To update your DHT bootstrap peers run on your user shell replacing YOUR_SSL_ID"
+	elog "cp ${S}/libbitdht/src/bitdht/bdboot.txt ${HOME}/.retroshare/YOUR_SSL_ID/bdboot.txt"
 }
