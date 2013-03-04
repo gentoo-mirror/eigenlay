@@ -111,7 +111,7 @@ pkg_postinst()
 		elog "$(shasum ${extension_dir}/*.so)"
 	}
 
-	einfo ""
-	einfo "To update your DHT bootstrap peers run on your user shell replacing YOUR_SSL_ID"
-	einfo "cp ${S}/libbitdht/src/bitdht/bdboot.txt ${HOME}/.retroshare/YOUR_SSL_ID/bdboot.txt"
+	elog ""
+	elog "To update your DHT bootstrap peers run replacing YOUR_HOME and YOUR_SSL_ID with correct values"
+	elog "cp ${S}/libbitdht/src/bitdht/bdboot.txt /YOUR_HOME/.retroshare/YOUR_SSL_ID/bdboot.txt"
 }
