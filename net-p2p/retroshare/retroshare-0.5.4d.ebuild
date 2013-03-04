@@ -87,12 +87,12 @@ src_install()
 		use links-cloud &&
 		{
 			insinto "${extension_dir}"
-			doins "${S}"/plugins/LinksCloud/*.so*        # Ignore repoman complaining about unquoted var, this must be unquoted for * expancion
+			doins "${S}"/plugins/LinksCloud/*.so*
 		}
 		use voip &&
 		{
 			insinto "${extension_dir}"
-			doins "${S}"/plugins/VOIP/*.so*              # Ignore repoman complaining about unquoted var, this must be unquoted for * expancion
+			doins "${S}"/plugins/VOIP/*.so*
 		}
 	}
 
@@ -111,6 +111,7 @@ pkg_postinst()
 		elog "$(shasum ${extension_dir}/*.so)"
 	}
 
-	elog "To update your DHT bootstrap peers run on your user shell replacing YOUR_SSL_ID"
-	elog "cp ${S}/libbitdht/src/bitdht/bdboot.txt ${HOME}/.retroshare/YOUR_SSL_ID/bdboot.txt"
+	einfo ""
+	einfo "To update your DHT bootstrap peers run on your user shell replacing YOUR_SSL_ID"
+	einfo "cp ${S}/libbitdht/src/bitdht/bdboot.txt ${HOME}/.retroshare/YOUR_SSL_ID/bdboot.txt"
 }
