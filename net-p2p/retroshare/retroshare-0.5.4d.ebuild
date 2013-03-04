@@ -112,6 +112,6 @@ pkg_postinst()
 	}
 
 	elog ""
-	elog "To update your DHT bootstrap peers run replacing YOUR_HOME and YOUR_SSL_ID with correct values"
+	elog "To update your DHT bootstrap peers run the following command replacing YOUR_HOME and YOUR_SSL_ID with the correct values"
 	elog "cp ${S}/libbitdht/src/bitdht/bdboot.txt /YOUR_HOME/.retroshare/YOUR_SSL_ID/bdboot.txt"
 }
