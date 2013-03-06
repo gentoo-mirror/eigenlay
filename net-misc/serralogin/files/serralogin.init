@@ -3,6 +3,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+[ "void${SERRALOGIN_DAEMON_PID_FILE}" = "void" ] && SERRALOGIN_DAEMON_PID_FILE="/var/run/serralogin-daemon.pid"
+
 start()
 {
 
