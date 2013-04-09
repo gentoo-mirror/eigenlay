@@ -23,6 +23,7 @@ RDEPEND="
 	dev-libs/libgpg-error
 	gnome-base/libgnome-keyring
 	net-libs/libupnp
+	dev-libs/protobuf
 	dev-qt/qtcore:4
 	X? (
 		x11-libs/libXScrnSaver
