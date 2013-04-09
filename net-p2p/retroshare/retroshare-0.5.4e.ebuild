@@ -38,7 +38,7 @@ DEPEND="${RDEPEND}"
 
 REQUIRED_USE="|| ( cli X ) links-cloud? ( X ) voip? ( X )"
 
-S="${WORKDIR}/trunk"
+S="${WORKDIR}/src"
 
 src_prepare()
 {
