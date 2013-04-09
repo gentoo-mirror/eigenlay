@@ -38,7 +38,7 @@ DEPEND="${RDEPEND}"
 
 REQUIRED_USE="|| ( cli X ) links-cloud? ( X ) voip? ( X )"
 
-S="${WORKDIR}/src"
+S="${WORKDIR}/retroshare-0.5.4/src"
 
 src_prepare()
 {
