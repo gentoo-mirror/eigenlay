@@ -22,6 +22,7 @@ IUSE="cli X links-cloud voip"
 RDEPEND="
 	dev-libs/libgpg-error
 	gnome-base/libgnome-keyring
+	net-libs/libssh[server]
 	net-libs/libupnp
 	dev-libs/protobuf
 	dev-qt/qtcore:4
