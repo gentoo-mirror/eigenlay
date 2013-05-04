@@ -11,7 +11,7 @@ HOMEPAGE="http://www.pps.jussieu.fr/~jch/software/babel/"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 if [[ ${PV} == "9999" ]]
