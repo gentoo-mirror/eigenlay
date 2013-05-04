@@ -1,0 +1,5 @@
+# Gioacchino Mazzurco <gio@eigenlab.org> (04 May 2013)
+# Mask for testing
+>=net-misc/babeld-1.4.0
+>=net-misc/babeld-9999
+
