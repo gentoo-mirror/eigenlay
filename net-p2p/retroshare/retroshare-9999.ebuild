@@ -54,6 +54,7 @@ src_prepare()
 	use X &&
 	{
 		rs_src_dirs="${rs_src_dirs} retroshare-gui/src"
+		# Patch code to enable empty passphrase
 		sed -i -e 's/(ui\.password_input->text()\.length() < 3 || ui\.name_input->text()\.length() < 3 || genLoc\.length() < 3)/(ui.name_input->text().length() < 3 || genLoc.length() < 3)/' "${S}/retroshare-gui/src/gui/GenCertDialog.cpp" || die "Failed patching to disable empty password check"
 	}
 	use links-cloud && rs_src_dirs="${rs_src_dirs} plugins/LinksCloud"
