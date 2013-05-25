@@ -51,7 +51,11 @@ src_prepare()
 {
 	rs_src_dirs="libbitdht/src openpgpsdk/src libretroshare/src"
 	use cli && rs_src_dirs="${rs_src_dirs} retroshare-nogui/src"
-	use X && rs_src_dirs="${rs_src_dirs} retroshare-gui/src"
+	use X &&
+	{
+		rs_src_dirs="${rs_src_dirs} retroshare-gui/src"
+		sed -i -e 's/(ui\.password_input->text()\.length() < 3 || ui\.name_input->text()\.length() < 3 || genLoc\.length() < 3)/(ui.name_input->text().length() < 3 || genLoc.length() < 3)/' "${S}/retroshare-gui/src/gui/GenCertDialog.cpp" || die "Failed patching to disable empty password check"
+	}
 	use links-cloud && rs_src_dirs="${rs_src_dirs} plugins/LinksCloud"
 
 	use voip &&
