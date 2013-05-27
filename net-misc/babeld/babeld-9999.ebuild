@@ -6,8 +6,8 @@ EAPI="2"
 
 inherit eutils
 
-DESCRIPTION="a loop-free distance-vector routing protocol"
-HOMEPAGE="http://www.pps.jussieu.fr/~jch/software/babel/"
+DESCRIPTION="A loop-free distance-vector routing protocol"
+HOMEPAGE="http://www.pps.univ-paris-diderot.fr/~jch/software/babel/"
 
 LICENSE="MIT"
 SLOT="0"
@@ -16,10 +16,11 @@ IUSE=""
 
 if [[ ${PV} == "9999" ]]
 	then
-		EGIT_REPO_URI="git://git.wifi.pps.jussieu.fr/${PN}"
 		inherit git-2
+		EGIT_REPO_URI="git://git.wifi.pps.jussieu.fr/${PN}"
 	else
-		SRC_URI="http://www.pps.jussieu.fr/~jch/software/files/${P}.tar.gz"
+		SRC_URI="http://www.pps.univ-paris-diderot.fr/~jch/software/files/${P}.tar.gz"
+		RESTRICT="mirror"
 fi
 
 src_compile()
