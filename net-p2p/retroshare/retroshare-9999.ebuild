@@ -12,7 +12,7 @@ HOMEPAGE="http://retroshare.sourceforge.net"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="cli X links-cloud voip"
+IUSE="cli X links-cloud voip gxs"
 
 if [[ ${PV} == "9999" ]]
 	then
@@ -63,6 +63,12 @@ src_prepare()
 	{
 		rs_src_dirs="${rs_src_dirs} plugins/VOIP"
 		echo "QT += multimedia mobility" >> "plugins/VOIP/VOIP.pro"
+	}
+
+	use gxs &&
+	{
+		sed -i '1iCONFIG += gxs' "${S}/libretroshare/src/libretroshare.pro"
+		sed -i '1iCONFIG += gxs' "${S}/retroshare-gui/src/retroshare-gui.pro"
 	}
 
 	for dir in ${rs_src_dirs}

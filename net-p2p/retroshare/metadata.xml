@@ -8,7 +8,8 @@
 	<use>
 		<flag name="cli">Enables the CLI version of RetroShare</flag>
 		<flag name="X">Enables the GUI version of RetroShare</flag>
-		<flag name="links-cloud">Enables LinkClouds Retroshare plugin</flag>
-		<flag name="voip">Enables VOIP Retroshare plugin</flag>
+		<flag name="links-cloud">Enables LinkClouds RetroShare plugin</flag>
+		<flag name="voip">Enables VOIP RetroShare plugin</flag>
+		<flag name="gxs">Enables RetroShare GXS</flag>
 	</use>
 </pkgmetadata>
