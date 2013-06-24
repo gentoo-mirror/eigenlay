@@ -32,6 +32,7 @@ RDEPEND="
 	net-libs/libssh[server]
 	net-libs/libupnp
 	dev-libs/protobuf
+	dev-db/sqlite
 	dev-qt/qtcore:4
 	X? (
 		x11-libs/libXScrnSaver
