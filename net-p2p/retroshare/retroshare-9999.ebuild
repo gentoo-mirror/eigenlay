@@ -51,6 +51,9 @@ REQUIRED_USE="|| ( cli X ) links-cloud? ( X ) voip? ( X )"
 src_prepare()
 {
 	rs_src_dirs="libbitdht/src openpgpsdk/src libretroshare/src"
+
+	sed -i '/#define ENABLE_ENCRYPTED_DB/d' "${S}/libretroshare/src/util/retrodb.cc"
+
 	use cli && rs_src_dirs="${rs_src_dirs} retroshare-nogui/src"
 	use X &&
 	{
