@@ -27,7 +27,6 @@ if [[ ${PV} == "9999" ]]
 fi
 
 RDEPEND="
-	dev-libs/libgpg-error
 	gnome-base/libgnome-keyring
 	net-libs/libssh[server]
 	net-libs/libupnp
