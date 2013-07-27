@@ -51,8 +51,6 @@ src_prepare()
 {
 	rs_src_dirs="libbitdht/src openpgpsdk/src libretroshare/src"
 
-#	sed -i '/#define ENABLE_ENCRYPTED_DB/d' "${S}/libretroshare/src/util/retrodb.cc"
-
 	use cli && rs_src_dirs="${rs_src_dirs} retroshare-nogui/src"
 	use X &&
 	{
@@ -70,8 +68,12 @@ src_prepare()
 
 	use gxs &&
 	{
+		rs_src_dirs="${rs_src_dirs} supportlibs/pegmarkdown"
+
 		sed -i '1iCONFIG += gxs' "${S}/libretroshare/src/libretroshare.pro"
 		sed -i '1iCONFIG += gxs' "${S}/retroshare-gui/src/retroshare-gui.pro"
+
+		sed -i 's:		LIBS += ../../../lib/sqlcipher/.libs/libsqlcipher.a:/usr/lib/libsqlcipher.a:g' "${S}/retroshare-gui/src/retroshare-gui.pro"
 	}
 
 	for dir in ${rs_src_dirs}
