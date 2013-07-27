@@ -68,7 +68,7 @@ src_prepare()
 
 	use gxs &&
 	{
-		rs_src_dirs="${rs_src_dirs} supportlibs/pegmarkdown"
+		rs_src_dirs="supportlibs/pegmarkdown ${rs_src_dirs}" # order is important here ;)
 
 		sed -i '1iCONFIG += gxs' "${S}/libretroshare/src/libretroshare.pro"
 		sed -i '1iCONFIG += gxs' "${S}/retroshare-gui/src/retroshare-gui.pro"
