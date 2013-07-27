@@ -33,7 +33,6 @@ RDEPEND="
 	net-libs/libupnp
 	dev-libs/protobuf
 	dev-db/sqlite
-	dev-db/sqlcipher
 	dev-qt/qtcore:4
 	X? (
 		x11-libs/libXScrnSaver
@@ -44,7 +43,8 @@ RDEPEND="
 		   media-libs/speex
 		   dev-qt/qt-mobility[multimedia]
 		   dev-qt/qtmultimedia
-	)"
+	)
+	gxs? ( dev-db/sqlcipher )"
 DEPEND="${RDEPEND}"
 
 REQUIRED_USE="|| ( cli X ) links-cloud? ( X ) voip? ( X )"
