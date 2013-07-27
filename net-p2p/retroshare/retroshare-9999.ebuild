@@ -73,7 +73,7 @@ src_prepare()
 		sed -i '1iCONFIG += gxs' "${S}/libretroshare/src/libretroshare.pro"
 		sed -i '1iCONFIG += gxs' "${S}/retroshare-gui/src/retroshare-gui.pro"
 
-		sed -i 's:		LIBS += ../../../lib/sqlcipher/.libs/libsqlcipher.a:/usr/lib/libsqlcipher.a:g' "${S}/retroshare-gui/src/retroshare-gui.pro"
+		sed -i 's:		LIBS += ../../../lib/sqlcipher/.libs/libsqlcipher.a:LIBS += /usr/lib/libsqlcipher.a:g' "${S}/retroshare-gui/src/retroshare-gui.pro"
 	}
 
 	for dir in ${rs_src_dirs}
