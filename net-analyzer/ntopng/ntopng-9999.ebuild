@@ -22,9 +22,16 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE=""
 
-DEPEND=""
-RDEPEND="dev-db/redis
-${DEPEND}"
+COMMON_DEPEND="dev-libs/glib
+dev-libs/geoip"
+DEPEND="${COMMON_DEPEND}"
+RDEPEND="${COMMON_DEPEND}
+dev-db/redis"
+
+src_configure()
+{
+	econf --prefix=/usr
+}
 
 pkg_postinst()
 {
