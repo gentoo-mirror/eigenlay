@@ -28,9 +28,20 @@ DEPEND="${COMMON_DEPEND}"
 RDEPEND="${COMMON_DEPEND}
 dev-db/redis"
 
-src_configure()
+src_install()
 {
-	econf --prefix=/usr
+	SHARE_NTOPNG_DIR="/usr/share/ntopng"
+	dodir ${SHARE_NTOPNG_DIR} || die "Failed creating ${PN} shared directory"
+	insinto ${SHARE_NTOPNG_DIR}
+	doins httpdocs || die "Failed installing ${PN} httpdocs"
+	doins scripts || die "Failed installing ${PN} scripts"
+
+
+	exeinto /usr/bin
+	doexe ${PN} || die "Failed installing the main executable failed"
+
+	doman ${PN}.8 || die "Failed installing the man failed"
+
 }
 
 pkg_postinst()
