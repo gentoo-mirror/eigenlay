@@ -119,8 +119,8 @@ src_install()
 		}
 	}
 
-	dodir /usr/share/${PN}
-	insinto /usr/share/${PN}
+	dodir /usr/share/RetroShare
+	insinto /usr/share/RetroShare
 	doins "${S}/libbitdht/src/bitdht/bdboot.txt"
 }
 
@@ -133,8 +133,4 @@ pkg_postinst()
 		elog "Plugin hashes:"
 		elog "$(shasum ${extension_dir}/*.so)"
 	}
-
-	elog ""
-	elog "To update your DHT bootstrap peers run the following command replacing YOUR_HOME and YOUR_SSL_ID with the correct values"
-	elog "cp /usr/share/${PN}/bdboot.txt /YOUR_HOME/.retroshare/YOUR_SSL_ID/bdboot.txt"
 }
