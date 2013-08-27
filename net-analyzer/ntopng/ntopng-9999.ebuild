@@ -49,4 +49,3 @@ pkg_postinst()
 {
 	elog "ntopng default creadential are user='admin' password='admin'"
 }
-

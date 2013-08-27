@@ -18,17 +18,18 @@ if [[ ${PV} == "9999" ]]
 	then
 		inherit subversion
 		ESVN_REPO_URI="svn://svn.code.sf.net/p/${PN}/code/trunk"
+		RDEPEND=">=net-libs/libssh-9999[server]"
 	else
 		MY_PN="RetroShare"
 		MY_P="${MY_PN}-v${PV}"
 		SRC_URI="mirror://sourceforge/retroshare/${MY_P}.tar.gz"
 		RESTRICT="mirror"
 		S="${WORKDIR}/retroshare-0.5.4/src"
+		RDEPEND="net-libs/libssh[server]"
 fi
 
-RDEPEND="
+RDEPEND="${RDEPEND}
 	gnome-base/libgnome-keyring
-	net-libs/libssh[server]
 	net-libs/libupnp
 	dev-libs/protobuf
 	dev-qt/qtcore:4
