@@ -1,0 +1,12 @@
+# Babeld init config file
+
+BABELD_PID_FILE="/var/run/babeld.pid"
+
+BABELD_EXTRA_OPTS="-c /etc/babeld/babeld.conf"
+
+
+# Add here services that brings up interfaces used by babeld
+# WARNING: Does not add net.eth0 or similar if you are inside
+# a linux container ( rc_sys="lxc" ) that will prevent babeld 
+# from starting.
+#rc_need="net.eth0"

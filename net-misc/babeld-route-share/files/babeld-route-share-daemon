@@ -1,0 +1,102 @@
+#!/bin/sh
+
+pidFile="/var/run/babeld-route-share-daemon.pid"
+
+. /etc/babeld/babeld-route-share-daemon.conf
+
+start()
+{
+	[ -f ${pidFile} ] && pid=$(cat ${pidFile}) && ps ${pid} | grep -q ${0} ||
+	{
+		while sleep $check_interval
+		do
+			echo "${shared_routes}" | while read line
+			do
+				echo ${line} | grep -q , || continue
+
+				tryCount=0
+				failCount=0
+
+				destination="$(echo ${line}  | awk -F, '{print $1}')"
+				routeOptions="$(echo ${line} | awk -F, '{print $2}')"
+				checkHosts="$(echo ${line}   | awk -F, '{print $3}')"
+				strictCheck=$(echo ${line}   | awk -F, '{print $4}')
+
+				for host in ${checkHosts}
+				do
+					ipv6=""
+					fullMaskCidr=32
+					echo ${host} | grep -q : && ipv6="6" && fullMaskCidr=128
+
+					ip route add ${host}/${fullMaskCidr} ${routeOptions} proto ${test_proto} || true
+					ping${ipv6} -c 5 -q $host || failCount=$((failCount+1))
+					tryCount=$((tryCount+1))
+					ip route del ${host}/${fullMaskCidr} ${routeOptions} proto ${test_proto} || true
+				done
+
+				[ ${strictCheck} -eq 1 ] && [ ${failCount} -gt 0  ] &&
+				{
+					# echo "ip route del ${route}"
+					ip route del ${destination} ${routeOptions} && killall --signal SIGUSR2 babeld || true
+					continue
+				}
+
+				[ ${failCount} -ge ${tryCount} ] &&
+				{
+					#echo "ip route del ${route}"
+					ip route del ${destination} ${routeOptions} && killall --signal SIGUSR2 babeld || true
+					continue
+				}
+
+				#echo  "ip route add ${route}"
+				ip route add ${destination} ${routeOptions} && killall --signal SIGUSR2 babeld || true
+			done &> /dev/null
+		done &
+		echo $! > ${pidFile}
+
+		return 0
+	}
+
+	return 1
+}
+
+stop()
+{
+	[ -f ${pidFile} ] && pid=$(cat ${pidFile}) && $(ps ${pid} | grep -q ${0}) &&
+	{
+
+		kill ${pid}
+
+		sleep 3s
+
+		rm ${pidFile}
+
+		echo "${shared_routes}" | while read line
+		do
+			echo ${line} | grep -q , || continue
+
+			destination="$(echo ${line} | awk -F, '{print $1}')"
+			routeOptions="$(echo ${line} | awk -F, '{print $2}')"
+			checkHosts="$(echo ${line} | awk -F, '{print $3}')" 
+
+			for host in ${checkHosts}
+			do
+				fullMaskCidr=32
+				echo ${host} | grep -q : && fullMaskCidr=128
+				ip route del ${host}/${fullMaskCidr} ${routeOptions} proto ${test_proto} || true
+			done
+
+			ip route del ${destination} ${routeOptions} || true
+		done &> /dev/null
+
+		return 0
+	}
+
+	return 1
+}
+
+[ "${1}" = "start" ] && start && exit 0
+[ "${1}" = "stop"  ] && stop  && exit 0
+
+exit 1
+

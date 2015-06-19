@@ -1,0 +1,38 @@
+#!/sbin/runscript
+# Copyright 1999-2011 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+[ "void${SERRALOGIN_DAEMON_PID_FILE}" = "void" ] && SERRALOGIN_DAEMON_PID_FILE="/var/run/serralogin-daemon.pid"
+
+start()
+{
+
+	ebegin "Starting Serra Auto Login Daemon"
+
+	/usr/sbin/serralogin-daemon &> /dev/null &
+	echo $! > "${SERRALOGIN_DAEMON_PID_FILE}"
+
+	eend $?
+
+}
+
+stop()
+{
+
+	ebegin "Stopping Serra Auto Login Daemon"
+
+	[ -f "${SERRALOGIN_DAEMON_PID_FILE}" ] && pid=$(cat "${SERRALOGIN_DAEMON_PID_FILE}") && ps ${pid} | grep -q serralogin-daemon && kill ${pid} && sleep 2 && rm -f "${SERRALOGIN_DAEMON_PID_FILE}"
+
+	eend $?
+
+}
+
+restart()
+{
+
+	svc_stop
+	sleep 3
+	svc_start
+
+}

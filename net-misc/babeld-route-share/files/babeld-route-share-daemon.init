@@ -1,0 +1,34 @@
+#!/sbin/runscript
+# Copyright 1999-2011 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+depend()
+{
+	after babeld
+}
+
+start()
+{
+	ebegin "Starting Babeld Safe Route Sharing daemon"
+
+	/usr/sbin/babeld-route-share-daemon start
+
+	eend $?
+}
+
+stop()
+{
+	ebegin "Stopping Babeld Safe Route Sharing daemon"
+
+	/usr/sbin/babeld-route-share-daemon stop
+
+	eend $?
+}
+
+restart()
+{
+	svc_stop
+	sleep 3
+	svc_start
+}
