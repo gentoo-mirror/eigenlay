@@ -1,0 +1,10 @@
+# This file is deprecated as per GLEP 56 in favor of metadata.xml.
+# Please add your descriptions to your package's metadata.xml ONLY.
+# * generated automatically using pmaint *
+
+net-misc/batman-adv:bla - B.A.T.M.A.N. bridge loop avoidance
+net-p2p/retroshare:X - Enables the GUI version of RetroShare
+net-p2p/retroshare:cli - Enables the CLI version of RetroShare
+net-p2p/retroshare:gxs - Enables RetroShare GXS
+net-p2p/retroshare:links-cloud - Enables LinkClouds RetroShare plugin
+net-p2p/retroshare:voip - Enables VOIP RetroShare plugin
