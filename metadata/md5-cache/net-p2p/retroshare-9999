@@ -1,0 +1,14 @@
+DEFINED_PHASES=compile configure install postinst preinst prepare unpack
+DEPEND=>=net-libs/libssh-9999[server] gnome-base/libgnome-keyring net-libs/libupnp dev-libs/protobuf dev-qt/qtcore:4 X? ( x11-libs/libXScrnSaver dev-qt/qtgui:4 dev-qt/qtopengl:4 ) voip? ( media-libs/speex dev-qt/qt-mobility[multimedia] dev-qt/qtmultimedia ) gxs? ( dev-db/sqlcipher ) || ( dev-vcs/subversion[http] dev-vcs/subversion[webdav-neon] dev-vcs/subversion[webdav-serf] ) net-misc/rsync
+DESCRIPTION=P2P private sharing application
+EAPI=4
+HOMEPAGE=http://retroshare.sourceforge.net
+IUSE=cli X links-cloud voip gxs
+KEYWORDS=~amd64 ~x86
+LICENSE=GPL-2
+RDEPEND=>=net-libs/libssh-9999[server] gnome-base/libgnome-keyring net-libs/libupnp dev-libs/protobuf dev-qt/qtcore:4 X? ( x11-libs/libXScrnSaver dev-qt/qtgui:4 dev-qt/qtopengl:4 ) voip? ( media-libs/speex dev-qt/qt-mobility[multimedia] dev-qt/qtmultimedia ) gxs? ( dev-db/sqlcipher )
+REQUIRED_USE=|| ( cli X ) links-cloud? ( X ) voip? ( X )
+SLOT=0
+_eclass_exported_funcs=pkg_preinst:subversion pkg_postinst:- src_unpack:subversion src_prepare:- src_configure:qt4-r2 src_compile:- src_install:-
+_eclasses_=base	3fe4f8980633fd7bc69e9887209ba2fe	eutils	f20548a2f7b0128068388cd2ec26708a	multilib	3972ca401cf7dbb430df9995f5d8d580	qmake-utils	bd69cb386c63df4642cf1392b50c8d81	qt4-r2	cb2cb5856695b300266b425da70e82d8	subversion	4fee0a764150bb4dda27ed4d2c4ed7ce	toolchain-funcs	7a212e5e01adfa4805c9978366e6ee85	versionator	99ae9d758cbe7cfed19170e7d48f5a9c
+_md5_=e48905ea9a110c3b9d41510556223968

@@ -1,4 +1,4 @@
-app-crypt/monkeysphere 9999: Leverage the OpenPGP web of trust for OpenSSH and Web authentication
+app-crypt/monkeysphere 9999: 
 dev-db/sqlcipher 9999: Like SQLite but encrypted
 net-misc/babeld 1.3.7 1.3.8 1.4.1 1.4.2 9999: A loop-free distance-vector routing protocol
 net-misc/babeld-route-share 0.1-r1: babeld safe route sharing tool
