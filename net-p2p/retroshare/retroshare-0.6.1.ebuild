@@ -67,13 +67,12 @@ RDEPEND="
 		virtual/ffmpeg[encode]
 	)"
 DEPEND="${RDEPEND}
-	qt4? ( dev-qt/designer:4 )
-	qt5? ( dev-qt/designer:5 )
+	qt4? ( dev-qt/qtcore:4 )
+	!qt4? ( dev-qt/qtcore:5 )
+	qt5? ( dev-qt/qtwidgets:5 )
 	virtual/pkgconfig"
 
 S="${WORKDIR}/RetroShare-${PV}"
-
-#PATCHES=( "${FILESDIR}/${P}-c11-compat.patch" )
 
 src_prepare() {
 	local dir
@@ -96,15 +95,16 @@ src_prepare() {
 		retroshare-gui/src/retroshare-gui.pro \
 		retroshare-nogui/src/retroshare-nogui.pro || die 'sed on retroshare-gui/src/retroshare-gui.pro failed'
 
-	#epatch ${PATCHES[@]}
+	# Avoid openpgpsdk false dependency on qtgui
+	sed -i '2iQT -= gui' openpgpsdk/src/openpgpsdk.pro
+
 	eapply_user
 }
 
 src_configure() {
 	for dir in ${rs_src_dirs} ; do
 		pushd "${S}/${dir}" 2>/dev/null || die
-		use qt4 && eqmake4
-		use qt5 && eqmake5
+		use qt4 && eqmake4 || eqmake5
 		popd 2>/dev/null || die
 	done
 }
