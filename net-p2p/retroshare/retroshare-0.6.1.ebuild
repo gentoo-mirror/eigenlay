@@ -95,12 +95,12 @@ src_prepare() {
 		retroshare-gui/src/retroshare-gui.pro \
 		retroshare-nogui/src/retroshare-nogui.pro || die 'sed on retroshare-gui/src/retroshare-gui.pro failed'
 
-	#epatch ${PATCHES[@]}
 	eapply_user
 }
 
 src_configure() {
 	for dir in ${rs_src_dirs} ; do
+		echo "src_configure() Calling qmake into ->${dir}<-"
 		pushd "${S}/${dir}" 2>/dev/null || die
 		use qt4 && eqmake4 || eqmake5
 		popd 2>/dev/null || die
