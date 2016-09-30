@@ -95,6 +95,9 @@ src_prepare() {
 		retroshare-gui/src/retroshare-gui.pro \
 		retroshare-nogui/src/retroshare-nogui.pro || die 'sed on retroshare-gui/src/retroshare-gui.pro failed'
 
+	# Avoid openpgpsdk false dependency on qtgui
+	sed -i '2i2 QT -= gui' openpgpsdk/src/openpgpsdk.pro
+
 	eapply_user
 }
 
