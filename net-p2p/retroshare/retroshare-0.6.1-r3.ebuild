@@ -103,9 +103,10 @@ src_prepare() {
 
 src_configure() {
 	for dir in ${rs_src_dirs} ; do
-		pushd "${S}/${dir}" 2>/dev/null || die
-		use qt4 && eqmake4 || eqmake5
-		popd 2>/dev/null || die
+		pushd "${S}/${dir}" &>/dev/null || die
+		use qt4 && eqmake4 || die
+		use qt4 || eqmake5 || die
+		popd &> /dev/null || die
 	done
 }
 
@@ -134,8 +135,8 @@ src_install() {
 	insinto /usr/share/RetroShare06
 	doins libbitdht/src/bitdht/bdboot.txt
 
-	insinto /usr/share/RetroShare06/webui
-	doins libresapi/src/webui/*
+	insinto /usr/share/RetroShare06
+	doins -r libresapi/src/webui
 
 	dodoc README.md
 	make_desktop_entry RetroShare06
