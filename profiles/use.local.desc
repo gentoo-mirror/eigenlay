@@ -5,5 +5,7 @@
 net-misc/batman-adv:bla - B.A.T.M.A.N. bridge loop avoidance
 net-p2p/retroshare:cli - Enables the CLI version of RetroShare
 net-p2p/retroshare:feedreader - Enables the Feedreader plugin
-net-p2p/retroshare:qt4 - Enables the GUI using qt4
+net-p2p/retroshare:gui - Enables the GUI version of RetroShare
+net-p2p/retroshare:qt4 - Compile using Qt version 4
+net-p2p/retroshare:qt5 - Compile usign Qt version 5
 net-p2p/retroshare:voip - Enables VOIP plugin
