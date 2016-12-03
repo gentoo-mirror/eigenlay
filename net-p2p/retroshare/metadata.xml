@@ -16,8 +16,10 @@
 	</longdescription>
 	<use>
 		<flag name="cli">Enables the CLI version of RetroShare</flag>
+		<flag name="gui">Enables the GUI version of RetroShare</flag>
 		<flag name="feedreader">Enables the Feedreader plugin</flag>
-		<flag name="qt4">Enables the GUI using qt4</flag>
+		<flag name="qt4">Compile using Qt version 4</flag>
+		<flag name="qt5">Compile usign Qt version 5</flag>
 		<flag name="voip">Enables VOIP plugin</flag>
 	</use>
 	<upstream>
