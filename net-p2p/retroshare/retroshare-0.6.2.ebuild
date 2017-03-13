@@ -1,21 +1,20 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=6
 
 inherit eutils gnome2-utils qmake-utils versionator
 
 DESCRIPTION="P2P private sharing application"
-HOMEPAGE="http://retroshare.net/"
-SRC_URI="https://github.com/RetroShare/RetroShare/archive/${PV}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="http://retroshare.net"
+SRC_URI="https://github.com/RetroShare/RetroShare/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 # pegmarkdown can also be used with MIT
-LICENSE="GPL-2 GPL-3 Apache-2.0 LGPL-2.1"
+LICENSE="GPL-2 GPL-3 Apache-2.0 LGPL-2.1 AGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-IUSE="cli feedreader +gui qt4 +qt5 voip"
+IUSE="autologin cli feedreader +gui qt4 +qt5 voip"
 REQUIRED_USE="
 	|| ( cli gui )
 	gui? ( ^^ ( qt4 qt5 ) )
@@ -27,49 +26,54 @@ RDEPEND="
 	app-arch/bzip2
 	dev-db/sqlcipher
 	dev-libs/openssl:0
-	gnome-base/libgnome-keyring
+	autologin? ( gnome-base/libgnome-keyring )
 	net-libs/libmicrohttpd
-	net-libs/libupnp
+	net-libs/libupnp:0
 	sys-libs/zlib
 	feedreader? (
 		dev-libs/libxml2
 		dev-libs/libxslt
 		net-misc/curl
 	)
-	gui? (
-		x11-libs/libX11
-		x11-libs/libXScrnSaver
-		qt4? (
-			dev-qt/qtcore:4
+	qt4? (
+		gui? (
+			dev-qt/designer:4
 			dev-qt/qtgui:4
+			x11-libs/libX11
+			x11-libs/libXScrnSaver
 		)
-		qt5? (
-			dev-qt/qtcore:5
-			dev-qt/qtgui:5
-			dev-qt/qtmultimedia:5
-			dev-qt/qtnetwork:5
-			dev-qt/qtprintsupport:5
-			dev-qt/qtscript:5
+		dev-qt/qtcore:4
+	)
+	qt5? (
+		gui? (
+			dev-qt/designer:5
 			dev-qt/qtwidgets:5
-			dev-qt/qtx11extras:5
-			dev-qt/qtxml:5
+			x11-libs/libX11
+			x11-libs/libXScrnSaver
 		)
+		dev-qt/qtcore:5
+		dev-qt/qtgui:5
+		dev-qt/qtmultimedia:5
+		dev-qt/qtnetwork:5
+		dev-qt/qtprintsupport:5
+		dev-qt/qtscript:5
+		dev-qt/qtx11extras:5
+		dev-qt/qtxml:5
 	)
 	voip? (
-		qt4? (
-			<media-libs/opencv-3.0.0
-			dev-qt/qt-mobility[multimedia]
-		)
 		qt5? (
-			<media-libs/opencv-3.0.0[-qt4]
+			media-libs/opencv[-qt4(-)]
+		)
+		qt4? (
+			media-libs/opencv
+			dev-qt/qt-mobility[multimedia]
 		)
 		media-libs/speex
 		virtual/ffmpeg[encode]
 	)"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
-	qt4? ( dev-qt/qtcore:4 )
-	qt5? ( dev-qt/qtcore:5 )"
+"
 
 S="${WORKDIR}/RetroShare-${PV}"
 
@@ -100,13 +104,13 @@ src_prepare() {
 }
 
 src_configure() {
+	qmakeConfigs=""
+	use autologin && qmakeConfigs="CONFIG+=rs_autologin"
+
 	for dir in ${rs_src_dirs} ; do
 		pushd "${S}/${dir}" >/dev/null || die
-		if use qt4; then
-			eqmake4 || die
-		elif use qt5; then
-			eqmake5 || die
-		fi
+		use qt4 && eqmake4 "$qmakeConfigs"
+		use qt5 && eqmake5 "$qmakeConfigs"
 		popd >/dev/null || die
 	done
 }
@@ -135,7 +139,6 @@ src_install() {
 	insinto /usr/share/RetroShare06
 	doins libbitdht/src/bitdht/bdboot.txt
 
-	insinto /usr/share/RetroShare06
 	doins -r libresapi/src/webui
 
 	dodoc README.md
