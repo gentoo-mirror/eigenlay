@@ -15,6 +15,7 @@
 		channels
 	</longdescription>
 	<use>
+		<flag name="autologin">Enables autologin via GNOME keyring</flag>
 		<flag name="cli">Enables the CLI version of RetroShare</flag>
 		<flag name="gui">Enables the GUI version of RetroShare</flag>
 		<flag name="feedreader">Enables the Feedreader plugin</flag>
