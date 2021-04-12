@@ -17,6 +17,7 @@ IUSE=""
 
 DEPEND=""
 RDEPEND="
+	media-libs/cimg
 	media-libs/libjpeg-turbo
 	media-libs/libpng
 	media-libs/tiff"
