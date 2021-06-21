@@ -3,4 +3,3 @@
 # * generated automatically using pmaint *
 
 app-editors/vscodium:libsecret - Enable libsecret support
-net-misc/batman-adv:bla - B.A.T.M.A.N. bridge loop avoidance
