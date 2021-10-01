@@ -7,8 +7,7 @@ inherit git-r3 cmake
 
 DESCRIPTION="pHash open source perceptual hash library"
 HOMEPAGE="https://www.phash.org/"
-EGIT_REPO_URI="https://github.com/G10h4ck/pHash.git"
-EGIT_BRANCH="android-ndk"
+EGIT_REPO_URI="https://github.com/aetilius/pHash.git"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -24,5 +23,8 @@ RDEPEND="
 
 multilib_src_configure()
 {
+	local mycmakeargs=(
+		-DLIB_INSTALL_DIR="$(get_libdir)"
+	)
 	cmake_src_configure
 }
