@@ -7,7 +7,8 @@ inherit git-r3 cmake
 
 DESCRIPTION="pHash open source perceptual hash library"
 HOMEPAGE="https://www.phash.org/"
-EGIT_REPO_URI="https://github.com/aetilius/pHash.git"
+EGIT_REPO_URI="https://gitlab.com/g10h4ck/pHash.git"
+EGIT_BRANCH="multilib-install"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -21,10 +22,12 @@ RDEPEND="
 	media-libs/libpng
 	media-libs/tiff"
 
-multilib_src_configure()
+src_prepare()
 {
-	local mycmakeargs=(
-		-DLIB_INSTALL_DIR="$(get_libdir)"
-	)
+	cmake_src_prepare
+}
+
+src_configure()
+{
 	cmake_src_configure
 }
